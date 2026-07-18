@@ -47,6 +47,7 @@
   .progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--orange);
     transition: width .25s; z-index: 10; }
   @media print { .slide { display: flex !important; height: 100vh; page-break-after: always; } .progress { display: none; } }
+@page { size: 340mm 191mm; margin: 0; }
 </style>
 </head>
 <body>
@@ -80,7 +81,7 @@
 <!-- 3 · DEMO STORY -->
 <section class="slide">
   <div class="kicker">Live demo · real data</div>
-  <h2>July 2026 heatwave → <span class="accent">trained forecaster</span> → tomorrow's temp</h2>
+  <h2>Any data, <span class="accent">straight in the terminal</span></h2>
   <div class="cols">
     <pre class="term">                Heatwave July 2026 (7-day max, °C)      
            ┌───────────────────────────────────────────┐
@@ -97,9 +98,9 @@ Montpellier┤██████████████████████
            └┬──────────┬─────────┬──────────┬─────────┬┘
            0.0        9.9      19.8       29.7     39.6</pre>
     <ul class="big">
-      <li>One prompt: Vibe fetches, trains, streams metrics.</li>
-      <li>Curves draw <b>live, epoch by epoch</b>, in braille.</li>
-      <li>“What's tomorrow's max in Paris?” → <b>28.7 °C</b></li>
+      <li>CSV, JSON streams, <b>Excel</b>, <b>SQLite</b> · one command each.</li>
+      <li>The July 2026 heatwave, charted from a SQL query.</li>
+      <li>Same charts, in color, <b>inside the Vibe conversation</b>.</li>
     </ul>
   </div>
   <div class="foot"><span>Vibe Pulse</span><span>3</span></div>
@@ -108,28 +109,29 @@ Montpellier┤██████████████████████
 <!-- 4 · PREDICTION -->
 <section class="slide">
   <div class="kicker">It actually works</div>
-  <h2>Predicted vs actual, <span class="accent">in the conversation</span></h2>
-  <pre class="term" style="align-self:center">Paris tmax: actual vs predicted
+  <h2>Machine learning, <span class="accent">fully in the terminal</span></h2>
+  <pre class="term" style="align-self:center">digit recognition - loss &amp; accuracy
    (Y)     ^
-43.1300000 |
-39.3566667 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀
-35.5833333 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⢰⠢⠜⠀⠱⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣸⠀⠀⠀⠀
-31.8100000 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠤⣀⡠⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠁⣕⠇⡠⡀⡰⠑⢌⣦⠀⠀⠀⠀⠀⢰⢒⠒⠤⠃⢸⠀⠀⠀⠀
-28.0366667 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠎⠁⠀⣀⣀⣸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢆⡜⢸⠈⠊⠀⠈⠀⠀⠀⠸⣆⣀⠀⡠⡲⢧⠊⠒⠉⠊⢹⠀⠀⠀⠀
-24.2633333 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⢃⠤⠔⠉⠀⠀⠈⣾⡤⡀⠀⠀⠀⠀⠀⠀⢠⢊⠧⠜⢣⠇⠀⠀⠀⠀⠀⠀⠀⠀⠉⢣⠿⠊⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀
-20.4900000 | ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⢃⠎⠀⠀⠀⠀⠀⠀⠋⠱⡑⠢⣀⣠⢴⠤⡀⣜⠎⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀
-16.7166667 | ⠀⠀⠀⠀⠀⠀⠀⠀⣠⡪⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠊⠁⠀⠓⠬⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀
-12.9433333 | ⠀⠀⠀⠀⠠⢤⠒⠉⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀
-9.17000000 | ⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀
+2.54269000 |
+2.26790200 | ⠀⠀⠀⢸⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+1.99311400 | ⠀⠀⠀⢸⠀⢱⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+1.71832600 | ⠀⠀⠀⢸⠀⠀⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+1.44353800 | ⠀⠀⠀⢸⠀⠀⠀⠣⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+1.16875000 | ⠀⠀⠀⢸⠀⠀⠀⠀⠘⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+0.89396200 | ⠀⠀⠀⢸⠀⠀⠀⠀⠀⠈⠢⡀⠀⠀⣀⣀⣀⣀⣀⣀⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠀⠀⠀⠀
+0.61917400 | ⠀⠀⠀⢸⠀⠀⠀⣀⠤⠔⠊⠉⠛⢍⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+0.34438600 | ⠀⠀⠀⢸⠀⢀⠜⠀⠀⠀⠀⠀⠀⠀⠉⠒⠢⢄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+0.06959800 | ⠀⠀⠀⢸⠐⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠒⠒⠒⠒⠤⠤⠤⠤⠤⠤⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+-0.2051900 | ⠉⠉⠉⢹⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉
 -----------|-|---------|---------|---------|---------|---------|-------&gt; (X)
-           | -64.90000 -52.25714 -39.61429 -26.97143 -14.32857 -1.685714
+           | -2.900000 5.4571429 13.814286 22.171429 30.528571 38.885714
 
 Legend:
 -------
-⠤⠤ actual
-⠤⠤ predicted</pre>
-  <p class="sub" style="align-self:center">3.3 °C mean error with a tiny MLP · Météo-France can sleep.
-  The point is the <b>workflow</b>.</p>
+⠤⠤ loss
+⠤⠤ accuracy</pre>
+  <p class="sub" style="align-self:center">Digit recognition to <b>98 %</b>, curves drawn live epoch by epoch ·
+  confusion heatmap and the misclassified digits, as images, in the conversation.</p>
   <div class="foot"><span>Vibe Pulse</span><span>4</span></div>
 </section>
 
@@ -142,7 +144,7 @@ Legend:
       <li><b>Skill</b> · ml-trainer orchestrates the loop</li>
       <li><b>Native tool</b> · plot_metrics, 8 chart kinds, colored TUI widget</li>
       <li><b>Provider</b> · Vibe inference on Qualcomm Cloud AI 100</li>
-      <li><b>Hook</b> · post_tool telemetry, charted by our own plotter</li>
+      <li><b>Hooks</b> · post_tool telemetry + pre_tool secrets-guard</li>
     </ul>
     <pre class="term" style="font-size:.55rem">       ,-.                                                                                                          
        `-&#x27;                                                                                                          
@@ -210,6 +212,7 @@ Legend:
     <li><b>Run comparison</b> · <code class="k">vibe-plot --compare</code> overlays any metric across experiments</li>
     <li><b>Agent-driven sweeps</b> · “try 3 learning rates and compare” · no sweep server, the agent is the orchestrator</li>
     <li><b>ASCII PlantUML diagrams</b> · architecture &amp; dependency graphs without leaving the terminal</li>
+    <li><b>Canvas-to-CLI</b> · a Vibe Work skill converted unchanged (doc, table, chart twins)</li>
     <li><b>vibe-arena</b> · LMArena-style model comparison in the console: Mistral vs OpenAI, latency &amp; tok/s charted</li>
     <li><b>Any data</b> · CSV, JSON streams, Excel, SQLite (<code class="k">--sql</code>) · and Canvas-style tables (<code class="k">--table</code>)</li>
   </ul>
@@ -258,7 +261,7 @@ Legend:
     <li><b>Richer TUI</b> · textual-plotext RGB widgets, rich-pixels sample images, zoom/pan</li>
     <li><b>Complex models</b> · CNNs, real datasets, fine-tuning, GPU runs · same live workflow</li>
     <li><b>Fully local</b> · Ollama/llama.cpp provider is one config line away; a <code class="k">/local</code> switch is in the works</li>
-    <li><b>Canvas-to-CLI</b> · every Mistral Work Canvas gets a terminal twin (tables ship today)</li>
+    <li><b>Canvas-to-CLI</b> · full coverage (first Work skill converted today)</li>
     <li><b>Deeper analysis</b> · dataset profiling, correlations, drift monitoring</li>
   </ul>
   <div class="foot"><span>Vibe Pulse</span><span>9</span></div>

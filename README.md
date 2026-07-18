@@ -30,16 +30,26 @@ flowchart LR
   renders Unicode/braille line & scatter charts (live with `--follow`),
   histograms (`--hist`), bar charts (`--bar`, via plotext), ANSI heatmaps
   (`--heatmap`), per-class precision/recall bars (`--report`) and ASCII
-  PlantUML diagrams (`--diagram`). Works in any Unicode terminal; no GUI,
-  no notebook, no browser.
+  PlantUML diagrams (`--diagram`), Canvas-style tables (`--table`),
+  formatted Markdown documents (`--doc`) and misclassified-digit images as
+  terminal pixels (`--digits`). Works in any Unicode terminal; no GUI, no
+  notebook, no browser.
 - **`plot_metrics` native Vibe tool** — a first-class `BaseTool` implementation
   ([vibe_tools/plot_metrics.py](vibe_tools/plot_metrics.py)) loaded through
   Vibe's own tool discovery (`tool_paths`), rendering charts directly in the
   Vibe conversation. Drop-in compatible with `vibe/core/tools/builtins/` —
   PR-ready for upstream.
+- **`vibe-arena`** — LMArena-style comparison in the console: one prompt to
+  Mistral and OpenAI side by side, latency + tokens/sec, CSV chartable by
+  vibe-plot.
+- **`canvas-to-cli` + `work-weekly-brief` skills** — any Vibe Work Canvas
+  deliverable gets a terminal twin (doc/table/chart/diagram mapping); the
+  demo Work skill runs unchanged in Vibe Code.
 - **`ml-trainer` skill** — teaches Vibe the whole loop: inspect a dataset,
   generate a training script that streams metrics, attach the live plot, then
   render the final report.
+- **`secrets-guard` pre_tool hook** — denies reads of credential-looking
+  files before they happen ([vibe_tools/secrets_guard.py](vibe_tools/secrets_guard.py)).
 - **`telemetry` hook** ([.vibe/hooks.toml](.vibe/hooks.toml)) — a `post_tool`
   hook logs every tool call (latency, status, output size) to
   `runs/telemetry.jsonl`… which vibe-plot can follow live: the agent charts
@@ -122,6 +132,11 @@ Add the skill and the native tool to `~/.vibe/config.toml`:
 skill_paths = ["/path/to/vibe_pulse/skills"]
 tool_paths  = ["/path/to/vibe_pulse/vibe_tools"]
 ```
+
+Optional providers (`~/.vibe/config.toml`): an OpenAI-style `[[providers]]`
+block pointing at Ollama (`http://localhost:11434/v1`) gives a fully local
+Mistral model (`/model` switch mid-session); the same pattern serves
+Qualcomm Cloud AI 100 via the AI Suite playground.
 
 Then ask Vibe: *"train a model on the digits dataset and show me the training
 live"*.
