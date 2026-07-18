@@ -21,6 +21,34 @@ def numeric_keys(rows):
     return keys
 
 
+def render_table(rows, columns=None, max_rows=25, title=None):
+    """Boxed, aligned terminal table — first brick of Canvas-to-CLI."""
+    if not rows:
+        return "vibe-plot: no rows"
+    columns = columns or list(rows[0].keys())
+    body = rows[:max_rows]
+
+    def fmt(v):
+        if isinstance(v, float):
+            return f"{v:g}"
+        return "" if v is None else str(v)
+
+    widths = [max(len(c), *(len(fmt(r.get(c))) for r in body)) for c in columns]
+    sep = "├" + "┼".join("─" * (w + 2) for w in widths) + "┤"
+    top = "┌" + "┬".join("─" * (w + 2) for w in widths) + "┐"
+    bot = "└" + "┴".join("─" * (w + 2) for w in widths) + "┘"
+    head = "│" + "│".join(f" {_bold(c.ljust(w))} " for c, w in zip(columns, widths)) + "│"
+    lines = ([_bold(title)] if title else []) + [top, head, sep]
+    for r in body:
+        lines.append("│" + "│".join(
+            f" {fmt(r.get(c)).rjust(w) if isinstance(r.get(c), (int, float)) else fmt(r.get(c)).ljust(w)} "
+            for c, w in zip(columns, widths)) + "│")
+    lines.append(bot)
+    if len(rows) > max_rows:
+        lines.append(f"… {len(rows) - max_rows} more rows")
+    return "\n".join(lines)
+
+
 def render_compare(series, width=70, height=15, title=None):
     """Overlay one metric across several runs. series = [(label, [(x, y)])]."""
     fig = plotille.Figure()

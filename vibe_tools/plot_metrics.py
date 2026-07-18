@@ -41,7 +41,7 @@ class PlotMetricsArgs(BaseModel):
         )
     )
     kind: Literal["line", "scatter", "hist", "bar", "heatmap", "report", "compare",
-                  "diagram"] = Field(
+                  "diagram", "table"] = Field(
         default="line",
         description=(
             "Chart type: 'line' curves, 'scatter' points, 'hist' distribution "
@@ -140,6 +140,10 @@ class PlotMetrics(
             cmd += ["--hist", column, "--width", str(args.width)]
         elif args.kind == "diagram":
             cmd.append("--diagram")
+        elif args.kind == "table":
+            cmd.append("--table")
+            if args.y:
+                cmd += ["--y", args.y]
         elif args.kind != "compare":
             cmd += ["--width", str(args.width), "--height", str(args.height)]
             if args.kind == "scatter":

@@ -103,6 +103,9 @@ Built on the shoulders of the terminal-dataviz ecosystem — next integrations:
   validation via Qualcomm AI Hub (compile + profile on Snapdragon).
 - More data sources: PostgreSQL, MongoDB, Parquet — same auto-detection as
   the Excel and SQLite readers shipped today.
+- **Canvas-to-CLI**: render Mistral Work Canvas artifacts in the terminal —
+  tables ship today (`--table`); charts, documents and mini-apps next, so
+  every Canvas has a terminal twin.
 - Full terminal data-analysis workflows: dataset profiling, correlations,
   drift monitoring — the terminal as a first-class data science surface.
 

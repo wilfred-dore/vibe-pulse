@@ -45,6 +45,8 @@ def main(argv=None):
                     help="render a PlantUML source file as an ASCII diagram")
     ap.add_argument("--sql", metavar="QUERY",
                     help="SELECT to run when source is a SQLite database")
+    ap.add_argument("--table", action="store_true",
+                    help="render rows as an aligned terminal table")
     ap.add_argument("--title")
     ap.add_argument("--width", type=int, default=70)
     ap.add_argument("--height", type=int, default=15)
@@ -91,6 +93,12 @@ def main(argv=None):
 
     y_keys = args.y_keys.split(",") if args.y_keys else None
     as_csv = args.csv or str(args.source).endswith(".csv")
+
+    if args.table:
+        rows = stream.read_rows(args.source, as_csv=as_csv, sql=args.sql)
+        columns = args.y_keys.split(",") if args.y_keys else None
+        print(plotter.render_table(rows, columns, title=args.title))
+        return 0
 
     if args.bar:
         if not (args.x_key and args.y_keys):

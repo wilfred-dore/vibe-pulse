@@ -25,6 +25,8 @@ Five kinds:
   sequence, class, component, state diagrams. Write the .puml file first,
   then call this. Great for explaining architectures without leaving the
   terminal.
+- `table`: render rows as an aligned, boxed terminal table (any source;
+  `y` = comma-separated columns to keep). Use for previews and summaries.
 
 The rendered chart is displayed to the user automatically. When summarizing,
 do not repeat the full chart; comment on what it shows (trend, convergence,
