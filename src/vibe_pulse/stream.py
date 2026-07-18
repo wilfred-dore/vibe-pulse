@@ -26,9 +26,50 @@ def _coerce(value):
         return value
 
 
-def read_rows(source, as_csv=False):
-    """Read every row available right now. source is a path or '-' for stdin."""
-    text = sys.stdin.read() if source == "-" else Path(source).read_text()
+SQLITE_SUFFIXES = {".sqlite", ".sqlite3", ".db"}
+
+
+def _read_xlsx(path):
+    import openpyxl
+
+    sheet = openpyxl.load_workbook(path, read_only=True, data_only=True).active
+    it = sheet.iter_rows(values_only=True)
+    header = [str(h) for h in next(it)]
+    return [dict(zip(header, (_coerce(v) for v in row))) for row in it
+            if any(v is not None for v in row)]
+
+
+def _read_sqlite(path, sql=None):
+    import sqlite3
+
+    con = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    try:
+        if not sql:
+            table = con.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' LIMIT 1"
+            ).fetchone()
+            if not table:
+                return []
+            sql = f'SELECT * FROM "{table[0]}" LIMIT 10000'
+        cur = con.execute(sql)
+        cols = [c[0] for c in cur.description]
+        return [dict(zip(cols, (_coerce(v) for v in row))) for row in cur.fetchall()]
+    finally:
+        con.close()
+
+
+def read_rows(source, as_csv=False, sql=None):
+    """Read every row available right now.
+
+    source: path or '-' for stdin. Formats: JSONL (default), CSV, .xlsx
+    spreadsheets, SQLite databases (optionally with a custom SELECT via sql).
+    """
+    path = Path(source) if source != "-" else None
+    if path and path.suffix == ".xlsx":
+        return _read_xlsx(path)
+    if path and (path.suffix in SQLITE_SUFFIXES or sql):
+        return _read_sqlite(path, sql)
+    text = sys.stdin.read() if source == "-" else path.read_text()
     if as_csv:
         reader = csv.DictReader(io.StringIO(text))
         return [{k: _coerce(v) for k, v in row.items()} for row in reader]

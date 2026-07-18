@@ -4,9 +4,10 @@ a model training run, or for any tabular file.
 
 Five kinds:
 - `line` (default): braille line curves from a JSONL stream (one flat JSON
-  object per line, e.g. `{"epoch": 3, "loss": 0.4, "accuracy": 0.88}`) or a
-  CSV file with a header. Numeric keys are auto-detected; use `x`/`y` to pick
-  specific columns.
+  object per line, e.g. `{"epoch": 3, "loss": 0.4, "accuracy": 0.88}`), a
+  CSV file with a header, an Excel spreadsheet (.xlsx), or a SQLite database
+  (.sqlite/.db — pass a custom SELECT via the CLI `--sql`). Numeric keys are
+  auto-detected; use `x`/`y` to pick specific columns.
 - `scatter`: same inputs as `line`, drawn as points — use for raw data
   exploration (feature vs feature, feature vs target).
 - `hist`: distribution of a single column; pass the column name in `y`.

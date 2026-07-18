@@ -43,6 +43,8 @@ def main(argv=None):
                     help="overlay one metric (--y, default 'loss') across several runs")
     ap.add_argument("--diagram", action="store_true",
                     help="render a PlantUML source file as an ASCII diagram")
+    ap.add_argument("--sql", metavar="QUERY",
+                    help="SELECT to run when source is a SQLite database")
     ap.add_argument("--title")
     ap.add_argument("--width", type=int, default=70)
     ap.add_argument("--height", type=int, default=15)
@@ -60,7 +62,7 @@ def main(argv=None):
         key = args.y_keys.split(",")[0] if args.y_keys else "loss"
         series = []
         for s in sources:
-            rows = stream.read_rows(s, as_csv=args.csv or str(s).endswith(".csv"))
+            rows = stream.read_rows(s, as_csv=args.csv or str(s).endswith(".csv"), sql=args.sql)
             keys = plotter.numeric_keys(rows)
             if not keys:
                 continue
@@ -94,7 +96,7 @@ def main(argv=None):
         if not (args.x_key and args.y_keys):
             print("vibe-plot: --bar needs --x (categories) and --y (values)")
             return 1
-        rows = stream.read_rows(args.source, as_csv=as_csv)
+        rows = stream.read_rows(args.source, as_csv=as_csv, sql=args.sql)
         y_key = args.y_keys.split(",")[0]
         pairs = [(str(r[args.x_key]), r[y_key]) for r in rows
                  if r.get(args.x_key) is not None
@@ -107,7 +109,7 @@ def main(argv=None):
         return 0
 
     if args.hist:
-        rows = stream.read_rows(args.source, as_csv=as_csv)
+        rows = stream.read_rows(args.source, as_csv=as_csv, sql=args.sql)
         values = [r[args.hist] for r in rows
                   if isinstance(r.get(args.hist), (int, float))]
         if not values:
@@ -122,7 +124,7 @@ def main(argv=None):
                                     args.title, scatter=args.scatter)
 
     if not args.follow:
-        print(frame(stream.read_rows(args.source, as_csv=as_csv)))
+        print(frame(stream.read_rows(args.source, as_csv=as_csv, sql=args.sql)))
         return 0
 
     rows = []

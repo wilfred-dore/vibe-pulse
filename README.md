@@ -23,11 +23,13 @@ flowchart LR
 
 ## Components
 
-- **`vibe-plot`** — a zero-config terminal plotter. Reads JSON lines or CSV,
+- **`vibe-plot`** — a zero-config terminal plotter. Reads JSON lines, CSV,
+  Excel spreadsheets (.xlsx) and SQLite databases (`--sql "SELECT ..."`);
   renders Unicode/braille line & scatter charts (live with `--follow`),
   histograms (`--hist`), bar charts (`--bar`, via plotext), ANSI heatmaps
-  (`--heatmap`), and per-class precision/recall bars (`--report`). Works in
-  any Unicode terminal; no GUI, no notebook, no browser.
+  (`--heatmap`), per-class precision/recall bars (`--report`) and ASCII
+  PlantUML diagrams (`--diagram`). Works in any Unicode terminal; no GUI,
+  no notebook, no browser.
 - **`plot_metrics` native Vibe tool** — a first-class `BaseTool` implementation
   ([vibe_tools/plot_metrics.py](vibe_tools/plot_metrics.py)) loaded through
   Vibe's own tool discovery (`tool_paths`), rendering charts directly in the
@@ -99,6 +101,8 @@ Built on the shoulders of the terminal-dataviz ecosystem — next integrations:
 - plotext datetime axes, candlesticks, multi-panel dashboards.
 - Heavier training loops: PyTorch models on real datasets, with on-device
   validation via Qualcomm AI Hub (compile + profile on Snapdragon).
+- More data sources: PostgreSQL, MongoDB, Parquet — same auto-detection as
+  the Excel and SQLite readers shipped today.
 - Full terminal data-analysis workflows: dataset profiling, correlations,
   drift monitoring — the terminal as a first-class data science surface.
 
