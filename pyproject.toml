@@ -9,6 +9,12 @@ dependencies = [
     "scikit-learn>=1.3",
 ]
 
+[project.optional-dependencies]
+aihub = [
+    "torch>=2.2",
+    "qai-hub>=0.20",
+]
+
 [project.scripts]
 vibe-plot = "vibe_pulse.cli:main"
 

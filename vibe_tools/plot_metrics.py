@@ -40,12 +40,13 @@ class PlotMetricsArgs(BaseModel):
             "report: JSON {'classes': [...], 'precision': [...], 'recall': [...]}."
         )
     )
-    kind: Literal["line", "scatter", "hist", "bar", "heatmap", "report"] = Field(
+    kind: Literal["line", "scatter", "hist", "bar", "heatmap", "report", "compare"] = Field(
         default="line",
         description=(
             "Chart type: 'line' curves, 'scatter' points, 'hist' distribution "
             "of one column, 'bar' categories (x=labels, y=values), "
-            "'heatmap' matrix, 'report' precision/recall bars"
+            "'heatmap' matrix, 'report' precision/recall bars, 'compare' one "
+            "metric overlaid across several runs (source = comma-separated files)"
         ),
     )
     x: str | None = Field(default=None, description="x-axis key (line only; default: first numeric key)")
@@ -101,13 +102,27 @@ class PlotMetrics(
     async def run(
         self, args: PlotMetricsArgs, ctx: InvokeContext | None = None
     ) -> AsyncGenerator[ToolStreamEvent | PlotMetricsResult, None]:
-        source = Path(args.source).expanduser()
-        if not source.is_absolute():
-            source = Path.cwd() / source
-        if not source.is_file():
-            raise ToolError(f"source file not found: {source}")
+        def resolve(p: str) -> Path:
+            path = Path(p.strip()).expanduser()
+            if not path.is_absolute():
+                path = Path.cwd() / path
+            if not path.is_file():
+                raise ToolError(f"source file not found: {path}")
+            return path
 
-        cmd = ["uv", "run", "--project", str(PROJECT_ROOT), "vibe-plot", str(source)]
+        if args.kind == "compare":
+            paths = [str(resolve(p)) for p in args.source.split(",")]
+            if len(paths) < 2:
+                raise ToolError("kind='compare' needs >= 2 comma-separated files")
+            cmd = ["uv", "run", "--project", str(PROJECT_ROOT), "vibe-plot",
+                   *paths, "--compare", "--width", str(args.width),
+                   "--height", str(args.height)]
+            if args.y:
+                cmd += ["--y", args.y]
+            source = Path(paths[0])
+        else:
+            source = resolve(args.source)
+            cmd = ["uv", "run", "--project", str(PROJECT_ROOT), "vibe-plot", str(source)]
         if args.kind == "heatmap":
             cmd.append("--heatmap")
         elif args.kind == "report":
@@ -121,7 +136,7 @@ class PlotMetrics(
             if not column:
                 raise ToolError("kind='hist' needs the column name in 'y'")
             cmd += ["--hist", column, "--width", str(args.width)]
-        else:
+        elif args.kind != "compare":
             cmd += ["--width", str(args.width), "--height", str(args.height)]
             if args.kind == "scatter":
                 cmd.append("--scatter")

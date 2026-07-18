@@ -16,6 +16,10 @@ Five kinds:
   (e.g. a confusion matrix).
 - `report`: a JSON file `{"classes": [...], "precision": [...], "recall": [...]}`
   rendered as per-class precision/recall bars.
+- `compare`: overlay one metric (`y`, default `loss`) across several training
+  runs — pass 2+ comma-separated JSONL paths in `source`, e.g.
+  `source="runs/a/metrics.jsonl,runs/b/metrics.jsonl"`. Use it to compare
+  experiments (W&B-style run comparison, in the terminal).
 
 The rendered chart is displayed to the user automatically. When summarizing,
 do not repeat the full chart; comment on what it shows (trend, convergence,

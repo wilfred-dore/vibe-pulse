@@ -21,6 +21,26 @@ def numeric_keys(rows):
     return keys
 
 
+def render_compare(series, width=70, height=15, title=None):
+    """Overlay one metric across several runs. series = [(label, [(x, y)])]."""
+    fig = plotille.Figure()
+    fig.width = width
+    fig.height = height
+    fig.color_mode = "names"
+    plotted = 0
+    for i, (label, pts) in enumerate(series):
+        if len(pts) >= 2:
+            fig.plot([p[0] for p in pts], [p[1] for p in pts],
+                     lc=COLORS[i % len(COLORS)], label=label)
+            plotted += 1
+    if not plotted:
+        return "vibe-plot: nothing to compare (need >= 2 points per run)"
+    out = fig.show(legend=True)
+    if title:
+        out = f"{_bold(title)}\n{out}"
+    return out
+
+
 def render_bar(labels, values, width=60, height=None, title=None):
     """Horizontal bar chart via plotext (labels = categories, values = numbers)."""
     import plotext as plt

@@ -21,7 +21,9 @@ def main(argv=None):
         description="Live data & ML training visualization in the terminal. "
                     "Reads JSON lines (one object per line) or CSV.",
     )
-    ap.add_argument("source", help="JSONL/CSV/JSON file, or '-' for stdin")
+    ap.add_argument("source", nargs="+",
+                    help="JSONL/CSV/JSON file(s), or '-' for stdin; "
+                         "several files with --compare to overlay runs")
     ap.add_argument("--x", dest="x_key", help="x-axis key (default: first numeric key)")
     ap.add_argument("--y", dest="y_keys", help="comma-separated series keys (default: all numeric keys)")
     ap.add_argument("--csv", action="store_true", help="parse source as CSV")
@@ -37,10 +39,32 @@ def main(argv=None):
     ap.add_argument("--hist", metavar="KEY", help="histogram of one column's values")
     ap.add_argument("--bar", action="store_true",
                     help="bar chart: --x = category column, --y = value column")
+    ap.add_argument("--compare", action="store_true",
+                    help="overlay one metric (--y, default 'loss') across several runs")
     ap.add_argument("--title")
     ap.add_argument("--width", type=int, default=70)
     ap.add_argument("--height", type=int, default=15)
     args = ap.parse_args(argv)
+    sources = args.source
+    args.source = sources[0]  # single-file modes use the first path
+
+    if args.compare:
+        key = args.y_keys.split(",")[0] if args.y_keys else "loss"
+        series = []
+        for s in sources:
+            rows = stream.read_rows(s, as_csv=args.csv or str(s).endswith(".csv"))
+            keys = plotter.numeric_keys(rows)
+            if not keys:
+                continue
+            x_key = args.x_key or keys[0]
+            pts = [(r[x_key], r[key]) for r in rows
+                   if isinstance(r.get(x_key), (int, float))
+                   and isinstance(r.get(key), (int, float))]
+            parent = Path(s).parent.name
+            series.append((parent if parent not in ("", ".") else Path(s).stem, pts))
+        print(plotter.render_compare(series, args.width, args.height,
+                                     args.title or f"compare: {key}"))
+        return 0
 
     if args.heatmap:
         payload = _load_json(args.source)

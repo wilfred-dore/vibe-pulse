@@ -71,7 +71,13 @@ def main():
         "precision": [round(float(p), 4) for p in precision],
         "recall": [round(float(r), 4) for r in recall],
     }))
-    print(f"done: test accuracy {clf.score(X_test, y_test):.4f} - artifacts in {out}/")
+    final_acc = clf.score(X_test, y_test)
+    with (out.parent / "index.jsonl").open("a") as idx:
+        idx.write(json.dumps({
+            "run": out.name, "backend": "sklearn", "epochs": args.epochs,
+            "final_loss": round(clf.loss_, 4), "final_accuracy": round(final_acc, 4),
+        }) + "\n")
+    print(f"done: test accuracy {final_acc:.4f} - artifacts in {out}/")
 
 
 if __name__ == "__main__":

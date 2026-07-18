@@ -60,6 +60,18 @@ uv run vibe-plot data/france_tmax_7d.csv --bar --x city --y tmax --title "Heatwa
 uv run vibe-plot data/paris_temps.csv --hist tmax --title "distribution of daily max temp"
 ```
 
+## Terminal-native MLOps (W&B-style, no server)
+
+- **Run tracking** — every training run appends config + final metrics to
+  `runs/index.jsonl`; each run keeps its own `metrics.jsonl` stream.
+- **Run comparison** — overlay any metric across experiments:
+  `uv run vibe-plot runs/a/metrics.jsonl runs/b/metrics.jsonl --compare --y loss`
+- **Agent-driven sweeps** — no sweep server needed: ask Vibe to "try 3 learning
+  rates and compare" and the skill orchestrates train → track → compare.
+- **On-device validation** — `examples/train_digits_torch.py` compiles and
+  profiles the trained model on a real Snapdragon via Qualcomm AI Hub
+  (`uv sync --extra aihub`), producing genuine on-device latency numbers.
+
 ## Roadmap
 
 Built on the shoulders of the terminal-dataviz ecosystem — next integrations:
