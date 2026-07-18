@@ -1,0 +1,11 @@
+# private hackathon notes & credentials — never commit
+docs_private/
+
+runs/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.DS_Store
