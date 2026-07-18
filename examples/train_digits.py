@@ -43,6 +43,7 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.25, random_state=42, stratify=y)
     scaler = StandardScaler().fit(X_train)
+    X_test_raw = X_test
     X_train, X_test = scaler.transform(X_train), scaler.transform(X_test)
 
     clf = MLPClassifier(hidden_layer_sizes=(64,), max_iter=1, warm_start=True,
@@ -65,6 +66,12 @@ def main():
         "labels": [str(c) for c in clf.classes_],
         "matrix": confusion_matrix(y_test, pred).tolist(),
     }))
+    wrong = [i for i in range(len(y_test)) if pred[i] != y_test[i]][:6]
+    (out / "misclassified.json").write_text(json.dumps([
+        {"label": int(y_test[i]), "pred": int(pred[i]),
+         "pixels": X_test_raw[i].reshape(8, 8).tolist()}
+        for i in wrong
+    ]))
     precision, recall, _, _ = precision_recall_fscore_support(y_test, pred)
     (out / "report.json").write_text(json.dumps({
         "title": "Per-class precision / recall",

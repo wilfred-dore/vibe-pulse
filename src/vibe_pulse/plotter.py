@@ -21,6 +21,35 @@ def numeric_keys(rows):
     return keys
 
 
+def render_digit_images(items, title=None, scale=2):
+    """Render 8x8 grayscale digit images as terminal half-block pixels.
+
+    items: [{"label": 5, "pred": 3, "pixels": [[0..16]*8]*8}, ...]
+    """
+    lines = [_bold(title)] if title else []
+    blocks = []
+    for item in items[:6]:
+        px = [[cell for cell in row for _ in range(scale)]
+              for row in item["pixels"] for _ in range(scale)]
+        rows_out = []
+        for top, bottom in zip(px[::2], px[1::2]):
+            row = ""
+            for t, b in zip(top, bottom):
+                fg = 232 + min(23, int(float(t) / 16 * 23))
+                bg = 232 + min(23, int(float(b) / 16 * 23))
+                row += f"\x1b[38;5;{fg}m\x1b[48;5;{bg}m▀"
+            rows_out.append(row + "\x1b[0m")
+        caption = f"true {item['label']} → predicted {item['pred']}"
+        blocks.append((rows_out, caption.center(len(px[0]))))
+    if not blocks:
+        return "vibe-plot: no misclassified samples"
+    height = len(blocks[0][0])
+    for i in range(height):
+        lines.append("   ".join(b[0][i] for b in blocks))
+    lines.append("   ".join(b[1] for b in blocks))
+    return "\n".join(lines)
+
+
 def render_table(rows, columns=None, max_rows=25, title=None):
     """Boxed, aligned terminal table — first brick of Canvas-to-CLI."""
     if not rows:

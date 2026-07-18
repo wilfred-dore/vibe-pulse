@@ -47,6 +47,10 @@ def main(argv=None):
                     help="SELECT to run when source is a SQLite database")
     ap.add_argument("--table", action="store_true",
                     help="render rows as an aligned terminal table")
+    ap.add_argument("--doc", action="store_true",
+                    help="render a Markdown document in the terminal (Canvas-to-CLI)")
+    ap.add_argument("--digits", action="store_true",
+                    help="render misclassified digit images as terminal pixels")
     ap.add_argument("--title")
     ap.add_argument("--width", type=int, default=70)
     ap.add_argument("--height", type=int, default=15)
@@ -93,6 +97,24 @@ def main(argv=None):
 
     y_keys = args.y_keys.split(",") if args.y_keys else None
     as_csv = args.csv or str(args.source).endswith(".csv")
+
+    if args.doc:
+        import io as _io
+
+        from rich.console import Console
+        from rich.markdown import Markdown
+
+        text = sys.stdin.read() if args.source == "-" else Path(args.source).read_text()
+        console = Console(file=_io.StringIO(), force_terminal=True,
+                          width=min(args.width, 110))
+        console.print(Markdown(text))
+        print(console.file.getvalue())
+        return 0
+
+    if args.digits:
+        payload = _load_json(args.source)
+        print(plotter.render_digit_images(payload, title=args.title))
+        return 0
 
     if args.table:
         rows = stream.read_rows(args.source, as_csv=as_csv, sql=args.sql)
