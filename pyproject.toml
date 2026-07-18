@@ -18,6 +18,7 @@ aihub = [
 
 [project.scripts]
 vibe-plot = "vibe_pulse.cli:main"
+vibe-arena = "vibe_pulse.arena:main"
 
 [build-system]
 requires = ["hatchling"]
