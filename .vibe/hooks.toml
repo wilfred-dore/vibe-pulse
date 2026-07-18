@@ -1,0 +1,10 @@
+# Project hooks for Mistral Vibe (loaded for sessions started in this repo).
+
+[[hooks]]
+name = "telemetry"
+type = "post_tool"
+command = "python3 vibe_tools/telemetry_hook.py"
+match = "*"
+timeout = 5.0
+strict = false
+description = "Append per-tool-call telemetry (latency, status, output size) to runs/telemetry.jsonl"

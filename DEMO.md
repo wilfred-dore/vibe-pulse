@@ -53,6 +53,14 @@ In Vibe:
 point is the workflow: tracking, comparison, agent-driven sweeps. W&B needs
 a server and a browser; we do it in the terminal, driven by the agent."
 
+Optional beat (15 s), in the right terminal:
+
+    uv run vibe-plot runs/telemetry.jsonl --follow --x call --y duration_ms --title "the agent, watching itself"
+
+**Say:** "Every Vibe extension surface, used: a skill, a native tool, a
+provider — and a post_tool hook streaming the agent's own telemetry into our
+plotter."
+
 ## Scene 4 — On-device + upstream (30 s)
 
 Show `runs/digits_torch/aihub.json` and/or the AI Hub dashboard page.

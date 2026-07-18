@@ -36,6 +36,11 @@ flowchart LR
 - **`ml-trainer` skill** — teaches Vibe the whole loop: inspect a dataset,
   generate a training script that streams metrics, attach the live plot, then
   render the final report.
+- **`telemetry` hook** ([.vibe/hooks.toml](.vibe/hooks.toml)) — a `post_tool`
+  hook logs every tool call (latency, status, output size) to
+  `runs/telemetry.jsonl`… which vibe-plot can follow live: the agent charts
+  its own telemetry.
+  `uv run vibe-plot runs/telemetry.jsonl --follow --x call --y duration_ms`
 - **`examples/train_digits.py`** — reference training script (sklearn digits,
   trains in seconds) that emits the metrics stream and final artifacts.
 - **`examples/train_weather.py`** — the same workflow on real data: trains a
