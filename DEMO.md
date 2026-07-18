@@ -85,5 +85,15 @@ first product feature."
 
 ## Closing line
 
-"Vibe Pulse — the terminal is a first-class data science surface. Give your
-agent eyes."
+"Three engineers, one terminal: software engineers get architecture diagrams
+and agent telemetry, ML engineers get live training and run comparison,
+embedded engineers get real Snapdragon numbers. Vibe Pulse — give your agent
+eyes."
+
+## Pitch deck
+
+Open `pitch/pitchdeck.html` in a browser, F11 for fullscreen — arrows or
+click to navigate, Cmd+P to export PDF. unDraw illustration slots are marked
+with dashed borders: download SVGs from https://undraw.co (suggested search:
+"visual data", "predictive analytics"), drop them in `pitch/img/` and swap
+the placeholder divs.

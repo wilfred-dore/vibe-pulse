@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vibe Pulse — Pitch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #101014; --panel: #17171d; --ink: #f4f1ea; --dim: #9a97a0;
+    --orange: #ff7000; --orange2: #ffaf00; --cyan: #35d0e0; --magenta: #e05fd0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: var(--bg); color: var(--ink);
+    font-family: "Helvetica Neue", Inter, Arial, sans-serif; }
+  .slide { height: 100vh; width: 100vw; display: none; flex-direction: column;
+    justify-content: center; padding: 6vh 8vw; position: relative; overflow: hidden; }
+  .slide.active { display: flex; }
+  .kicker { color: var(--orange); font-weight: 700; text-transform: uppercase;
+    letter-spacing: .18em; font-size: 1rem; margin-bottom: 1.2rem; }
+  h1 { font-size: 4.2rem; line-height: 1.05; letter-spacing: -.02em; }
+  h2 { font-size: 2.8rem; line-height: 1.1; letter-spacing: -.01em; margin-bottom: 2.2rem; }
+  .accent { color: var(--orange); }
+  .sub { color: var(--dim); font-size: 1.35rem; margin-top: 1.4rem; max-width: 46rem; }
+  pre.term { background: #0a0a0e; border: 1px solid #26262e; border-radius: 10px;
+    padding: 1.1rem 1.3rem; color: #d8d4ff; font: 0.72rem/1.25 "SF Mono", Menlo, monospace;
+    overflow: hidden; white-space: pre; box-shadow: 0 12px 40px rgba(0,0,0,.5); }
+  pre.term .t { color: var(--orange2); font-weight: 600; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  ul.big { list-style: none; font-size: 1.5rem; line-height: 1.5; }
+  ul.big li { margin: 1rem 0; padding-left: 2rem; position: relative; }
+  ul.big li::before { content: "▸"; color: var(--orange); position: absolute; left: 0; }
+  ul.big b { color: var(--orange2); font-weight: 700; }
+  .stat-row { display: flex; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .stat { background: var(--panel); border: 1px solid #26262e; border-radius: 12px;
+    padding: 1.5rem 2rem; min-width: 13rem; }
+  .stat .n { font-size: 2.6rem; font-weight: 800; color: var(--orange); }
+  .stat .l { color: var(--dim); margin-top: .4rem; font-size: 1.05rem; }
+  .foot { position: absolute; bottom: 3vh; left: 8vw; right: 8vw; display: flex;
+    justify-content: space-between; color: var(--dim); font-size: .95rem; }
+  .imgslot { border: 2px dashed #34343e; border-radius: 12px; color: var(--dim);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-size: 1rem; padding: 1rem; min-height: 14rem; }
+  .imgslot img { max-width: 100%; max-height: 38vh; }
+  .phone { display: flex; align-items: center; gap: 2rem; }
+  code.k { background: #232329; border-radius: 6px; padding: .15em .5em;
+    color: var(--cyan); font-size: .95em; }
+  .progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--orange);
+    transition: width .25s; z-index: 10; }
+  @media print { .slide { display: flex !important; height: 100vh; page-break-after: always; } .progress { display: none; } }
+</style>
+</head>
+<body>
+<div class="progress" id="bar"></div>
+
+<!-- 1 · TITLE -->
+<section class="slide active">
+  <div class="kicker">Mistral AI · Vibe Hackathon · Paris · July 18, 2026</div>
+  <h1>Vibe <span class="accent">Pulse</span></h1>
+  <p class="sub" style="font-size:1.8rem">Give your agent eyes — live ML training
+  &amp; data visualization, right in the terminal.</p>
+  <div class="foot"><span>Wilfred Doré</span><span>github.com/wilfred-dore/vibe-pulse</span></div>
+</section>
+
+<!-- 2 · PROBLEM -->
+<section class="slide">
+  <div class="kicker">The gap</div>
+  <h2>Terminal-first ML devs still <span class="accent">leave the terminal</span> to see a curve</h2>
+  <div class="cols">
+    <ul class="big">
+      <li>Vibe <b>Work</b> charts your data in Canvas. Vibe <b>Code</b> (CLI): nothing.</li>
+      <li>Jupyter or TensorBoard just to check convergence = context-switch tax.</li>
+      <li>No terminal coding agent does this natively. <b>None.</b></li>
+    </ul>
+    <div class="imgslot"><!-- unDraw suggestion: "visual data" or "predictive analytics" — drop SVG in pitch/img/ and replace this div with <img src="img/....svg"> -->
+      unDraw illustration<br>« visual data »</div>
+  </div>
+  <div class="foot"><span>Vibe Pulse</span><span>2</span></div>
+</section>
+
+<!-- 3 · DEMO STORY -->
+<section class="slide">
+  <div class="kicker">Live demo · real data</div>
+  <h2>July 2026 heatwave → <span class="accent">trained forecaster</span> → tomorrow's temp</h2>
+  <div class="cols">
+    <pre class="term">{{BAR}}</pre>
+    <ul class="big">
+      <li>One prompt: Vibe fetches, trains, streams metrics.</li>
+      <li>Curves draw <b>live, epoch by epoch</b>, in braille.</li>
+      <li>“What's tomorrow's max in Paris?” → <b>28.7 °C</b></li>
+    </ul>
+  </div>
+  <div class="foot"><span>Vibe Pulse</span><span>3</span></div>
+</section>
+
+<!-- 4 · PREDICTION -->
+<section class="slide">
+  <div class="kicker">It actually works</div>
+  <h2>Predicted vs actual, <span class="accent">in the conversation</span></h2>
+  <pre class="term" style="align-self:center">{{OVERLAY}}</pre>
+  <p class="sub" style="align-self:center">3.3 °C mean error with a tiny MLP — Météo-France can sleep.
+  The point is the <b>workflow</b>.</p>
+  <div class="foot"><span>Vibe Pulse</span><span>4</span></div>
+</section>
+
+<!-- 5 · ARCHITECTURE -->
+<section class="slide">
+  <div class="kicker">Under the hood</div>
+  <h2>Every Vibe extension surface, <span class="accent">used</span></h2>
+  <div class="cols">
+    <ul class="big">
+      <li><b>Skill</b> — ml-trainer orchestrates the loop</li>
+      <li><b>Native tool</b> — plot_metrics, 8 chart kinds, colored TUI widget</li>
+      <li><b>Provider</b> — Vibe inference on Qualcomm Cloud AI 100</li>
+      <li><b>Hook</b> — post_tool telemetry, charted by our own plotter</li>
+    </ul>
+    <pre class="term" style="font-size:.55rem">{{DIAGRAM}}</pre>
+  </div>
+  <div class="foot"><span>Vibe Pulse</span><span>5</span></div>
+</section>
+
+<!-- 5b · AUDIENCES -->
+<section class="slide">
+  <div class="kicker">Who it serves</div>
+  <h2>Three engineers, <span class="accent">one terminal</span></h2>
+  <div class="stat-row">
+    <div class="stat" style="flex:1"><div class="n">🧑‍💻</div>
+      <div class="l"><b style="color:var(--ink)">Software engineers</b><br>
+      ASCII PlantUML architecture diagrams, telemetry of the agent's own
+      tool calls — better software development, in place.</div></div>
+    <div class="stat" style="flex:1"><div class="n">📈</div>
+      <div class="l"><b style="color:var(--ink)">Data scientists / ML engineers</b><br>
+      live training curves, confusion heatmaps, run tracking &amp;
+      comparison — no Jupyter, no TensorBoard.</div></div>
+    <div class="stat" style="flex:1"><div class="n">📱</div>
+      <div class="l"><b style="color:var(--ink)">Embedded systems engineers</b><br>
+      compile + profile on real Snapdragon from the same session —
+      0.052 ms measured, not estimated.</div></div>
+  </div>
+  <div class="foot"><span>Vibe Pulse</span><span>6</span></div>
+</section>
+
+<!-- 6 · MLOPS -->
+<section class="slide">
+  <div class="kicker">Terminal-native MLOps</div>
+  <h2>W&amp;B needs a server and a browser. <span class="accent">We don't.</span></h2>
+  <ul class="big">
+    <li><b>Run tracking</b> — every run logged to <code class="k">runs/index.jsonl</code></li>
+    <li><b>Run comparison</b> — <code class="k">vibe-plot --compare</code> overlays any metric across experiments</li>
+    <li><b>Agent-driven sweeps</b> — “try 3 learning rates and compare” — no sweep server, the agent is the orchestrator</li>
+    <li><b>ASCII PlantUML diagrams</b> — the agent explains architectures without leaving the terminal</li>
+  </ul>
+  <div class="foot"><span>Vibe Pulse</span><span>6</span></div>
+</section>
+
+<!-- 7 · QUALCOMM -->
+<section class="slide">
+  <div class="kicker">Real silicon</div>
+  <h2>Trained in the terminal, <span class="accent">validated on Snapdragon</span></h2>
+  <div class="phone">
+    <svg width="120" height="220" viewBox="0 0 120 220" fill="none">
+      <rect x="6" y="4" width="108" height="212" rx="18" stroke="#ff7000" stroke-width="3"/>
+      <rect x="16" y="22" width="88" height="164" rx="6" fill="#17171d"/>
+      <circle cx="60" cy="201" r="7" stroke="#ff7000" stroke-width="2"/>
+      <text x="60" y="90" fill="#ffaf00" font-size="22" text-anchor="middle" font-family="monospace" font-weight="bold">0.052</text>
+      <text x="60" y="112" fill="#9a97a0" font-size="12" text-anchor="middle" font-family="monospace">ms / inference</text>
+    </svg>
+    <div class="stat-row" style="margin-top:0">
+      <div class="stat"><div class="n">0.052 ms</div><div class="l">on-device inference<br>Samsung Galaxy S24+ (AI Hub)</div></div>
+      <div class="stat"><div class="n">24 MB</div><div class="l">peak memory on device</div></div>
+      <div class="stat"><div class="n">Cloud AI 100</div><div class="l">Vibe's own inference runs on<br>Qualcomm silicon (Cirrascale)</div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Vibe Pulse</span><span>7</span></div>
+</section>
+
+<!-- 8 · UPSTREAM -->
+<section class="slide">
+  <div class="kicker">Track 2 · giving back</div>
+  <h2>PR-ready <span class="accent">upstream</span></h2>
+  <ul class="big">
+    <li>Draft PR <b>mistralai/mistral-vibe #920</b>: a native <code class="k">plot_metrics</code> builtin</li>
+    <li>Zero new dependencies — built on <code class="k">render_braille</code>…</li>
+    <li>…the primitive that animates <b>Vibe's mascot</b>. First product feature for the cat. 🐱</li>
+    <li>Found &amp; documented a real API pitfall (braille dot-index overflow) along the way</li>
+  </ul>
+  <div class="foot"><span>Vibe Pulse</span><span>8</span></div>
+</section>
+
+<!-- 9 · ROADMAP -->
+<section class="slide">
+  <div class="kicker">Roadmap</div>
+  <h2>The terminal as a <span class="accent">first-class</span> data science surface</h2>
+  <ul class="big">
+    <li><b>Richer TUI</b> — textual-plotext RGB widgets, rich-pixels sample images, zoom/pan</li>
+    <li><b>Complex models</b> — CNNs, real datasets, fine-tuning, GPU runs — same live workflow</li>
+    <li><b>Fully local</b> — llama.cpp provider is already one config line away (blocked by upstream #281)</li>
+    <li><b>Deeper analysis</b> — dataset profiling, correlations, drift monitoring</li>
+  </ul>
+  <div class="foot"><span>Vibe Pulse</span><span>9</span></div>
+</section>
+
+<!-- 10 · CLOSE -->
+<section class="slide">
+  <div class="kicker">Vibe Pulse</div>
+  <h1>Give your agent <span class="accent">eyes.</span></h1>
+  <p class="sub" style="font-size:1.6rem">Works today — a skill, a native tool, a provider, a hook.<br>
+  github.com/wilfred-dore/vibe-pulse · PR mistralai/mistral-vibe #920</p>
+  <div class="foot"><span>Merci !</span><span>Vibe Hackathon Paris 2026</span></div>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll(".slide")];
+  let i = 0;
+  const show = n => {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle("active", k === i));
+    document.getElementById("bar").style.width = ((i + 1) / slides.length * 100) + "%";
+  };
+  addEventListener("keydown", e => {
+    if (["ArrowRight", " ", "PageDown"].includes(e.key)) show(i + 1);
+    if (["ArrowLeft", "PageUp"].includes(e.key)) show(i - 1);
+  });
+  addEventListener("click", () => show(i + 1));
+  show(0);
+</script>
+</body>
+</html>
