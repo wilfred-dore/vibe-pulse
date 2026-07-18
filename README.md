@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo.png" width="180" alt="Vibe Pulse"></p>
+
 # Vibe Pulse
 
 **Live ML training and data visualization in the terminal — built for [Mistral Vibe](https://github.com/mistralai/vibe).**
