@@ -70,7 +70,8 @@ uv run vibe-plot data/paris_temps.csv --hist tmax --title "distribution of daily
   rates and compare" and the skill orchestrates train → track → compare.
 - **On-device validation** — `examples/train_digits_torch.py` compiles and
   profiles the trained model on a real Snapdragon via Qualcomm AI Hub
-  (`uv sync --extra aihub`), producing genuine on-device latency numbers.
+  (`uv sync --extra aihub`). Measured on a real device during the hackathon:
+  **0.052 ms inference, 24 MB peak memory on a Samsung Galaxy S24+**.
 
 ## Roadmap
 
