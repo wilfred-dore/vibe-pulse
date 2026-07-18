@@ -21,6 +21,21 @@ def numeric_keys(rows):
     return keys
 
 
+def render_bar(labels, values, width=60, height=None, title=None):
+    """Horizontal bar chart via plotext (labels = categories, values = numbers)."""
+    import plotext as plt
+
+    plt.clear_figure()
+    plt.theme("pro")  # transparent background, works on dark and light terminals
+    plt.bar(labels, values, orientation="horizontal", color=208)
+    if title:
+        plt.title(title)
+    plt.plotsize(width, height or max(12, len(labels) + 4))
+    out = plt.build()
+    plt.clear_figure()
+    return out.rstrip()
+
+
 def render_hist(values, bins=25, width=60, title=None):
     out = plotille.hist(values, bins=bins, width=width, lc="cyan", color_mode="names")
     if title:

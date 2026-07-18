@@ -10,6 +10,8 @@ Five kinds:
 - `scatter`: same inputs as `line`, drawn as points — use for raw data
   exploration (feature vs feature, feature vs target).
 - `hist`: distribution of a single column; pass the column name in `y`.
+- `bar`: horizontal bar chart for categorical data; `x` = label column,
+  `y` = value column (e.g. cities vs temperature, classes vs count).
 - `heatmap`: a JSON file `{"title": str, "labels": [...], "matrix": [[...]]}`
   (e.g. a confusion matrix).
 - `report`: a JSON file `{"classes": [...], "precision": [...], "recall": [...]}`

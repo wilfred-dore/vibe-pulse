@@ -40,11 +40,12 @@ class PlotMetricsArgs(BaseModel):
             "report: JSON {'classes': [...], 'precision': [...], 'recall': [...]}."
         )
     )
-    kind: Literal["line", "scatter", "hist", "heatmap", "report"] = Field(
+    kind: Literal["line", "scatter", "hist", "bar", "heatmap", "report"] = Field(
         default="line",
         description=(
             "Chart type: 'line' curves, 'scatter' points, 'hist' distribution "
-            "of one column, 'heatmap' matrix, 'report' precision/recall bars"
+            "of one column, 'bar' categories (x=labels, y=values), "
+            "'heatmap' matrix, 'report' precision/recall bars"
         ),
     )
     x: str | None = Field(default=None, description="x-axis key (line only; default: first numeric key)")
@@ -111,6 +112,10 @@ class PlotMetrics(
             cmd.append("--heatmap")
         elif args.kind == "report":
             cmd.append("--report")
+        elif args.kind == "bar":
+            if not (args.x and args.y):
+                raise ToolError("kind='bar' needs x (category column) and y (value column)")
+            cmd += ["--bar", "--x", args.x, "--y", args.y, "--width", str(args.width)]
         elif args.kind == "hist":
             column = args.y or args.x
             if not column:

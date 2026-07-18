@@ -35,6 +35,8 @@ def main(argv=None):
                          "({'classes': [...], 'precision': [...], 'recall': [...]})")
     ap.add_argument("--scatter", action="store_true", help="draw points instead of lines")
     ap.add_argument("--hist", metavar="KEY", help="histogram of one column's values")
+    ap.add_argument("--bar", action="store_true",
+                    help="bar chart: --x = category column, --y = value column")
     ap.add_argument("--title")
     ap.add_argument("--width", type=int, default=70)
     ap.add_argument("--height", type=int, default=15)
@@ -55,6 +57,22 @@ def main(argv=None):
 
     y_keys = args.y_keys.split(",") if args.y_keys else None
     as_csv = args.csv or str(args.source).endswith(".csv")
+
+    if args.bar:
+        if not (args.x_key and args.y_keys):
+            print("vibe-plot: --bar needs --x (categories) and --y (values)")
+            return 1
+        rows = stream.read_rows(args.source, as_csv=as_csv)
+        y_key = args.y_keys.split(",")[0]
+        pairs = [(str(r[args.x_key]), r[y_key]) for r in rows
+                 if r.get(args.x_key) is not None
+                 and isinstance(r.get(y_key), (int, float))]
+        if not pairs:
+            print(f"vibe-plot: no data for '{args.x_key}'/'{y_key}'")
+            return 1
+        print(plotter.render_bar([p[0] for p in pairs], [p[1] for p in pairs],
+                                 width=args.width, title=args.title))
+        return 0
 
     if args.hist:
         rows = stream.read_rows(args.source, as_csv=as_csv)

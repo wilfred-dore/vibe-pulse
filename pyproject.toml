@@ -5,6 +5,7 @@ description = "Live ML training and data visualization in the terminal, built fo
 requires-python = ">=3.10"
 dependencies = [
     "plotille>=5.0",
+    "plotext>=5.2",
     "scikit-learn>=1.3",
 ]
 

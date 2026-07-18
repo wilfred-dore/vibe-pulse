@@ -18,9 +18,10 @@ User: "train a model on digits and show me the curve"
 ## Components
 
 - **`vibe-plot`** — a zero-config terminal plotter. Reads JSON lines or CSV,
-  renders Unicode/braille line charts (live with `--follow`), ANSI heatmaps
-  (`--heatmap`), and per-class precision/recall bars (`--report`). Works in any
-  Unicode terminal; no GUI, no notebook, no browser.
+  renders Unicode/braille line & scatter charts (live with `--follow`),
+  histograms (`--hist`), bar charts (`--bar`, via plotext), ANSI heatmaps
+  (`--heatmap`), and per-class precision/recall bars (`--report`). Works in
+  any Unicode terminal; no GUI, no notebook, no browser.
 - **`plot_metrics` native Vibe tool** — a first-class `BaseTool` implementation
   ([vibe_tools/plot_metrics.py](vibe_tools/plot_metrics.py)) loaded through
   Vibe's own tool discovery (`tool_paths`), rendering charts directly in the
@@ -47,9 +48,24 @@ uv run vibe-plot runs/digits/metrics.jsonl --follow --idle-timeout 5 --title "ML
 uv run vibe-plot runs/digits/confusion.json --heatmap
 uv run vibe-plot runs/digits/report.json --report
 
-# it is also a generic terminal data-viz tool
-uv run vibe-plot any_file.csv --x date --y revenue,cost
+# it is also a generic terminal data-viz tool — e.g. the July 2026 heatwave:
+uv run vibe-plot data/paris_temps.csv --x day --y tmax,tmin --title "Paris temps (°C)"
+uv run vibe-plot data/france_tmax_7d.csv --bar --x city --y tmax --title "Heatwave (7-day max)"
+uv run vibe-plot data/paris_temps.csv --hist tmax --title "distribution of daily max temp"
 ```
+
+## Roadmap
+
+Built on the shoulders of the terminal-dataviz ecosystem — next integrations:
+
+- [textual-plotext](https://github.com/Textualize/textual-plotext): render charts
+  as real Textual widgets inside Vibe's TUI (Vibe is Textual-based — this is its
+  own ecosystem's official plotting widget).
+- [rich-pixels](https://github.com/Textualize/rich-pixels): show misclassified
+  samples (e.g. digit images) right in the conversation.
+- [textual-plot](https://github.com/davidfokkema/textual-plot): zoom/pan for
+  interactive exploration.
+- plotext datetime axes, candlesticks, multi-panel dashboards.
 
 ## Use it from Mistral Vibe
 
