@@ -7,12 +7,18 @@ terminal coding agent — cannot. Data scientists who live in the terminal still
 have to context-switch to Jupyter or TensorBoard just to see whether a training
 run converges. Vibe Pulse closes that gap.
 
-```
-User: "train a model on digits and show me the curve"
-  └─ Vibe (ml-trainer skill)
-       ├─ writes/runs a training script → streams {"epoch", "loss", "accuracy"} as JSON lines
-       ├─ vibe-plot --follow  → live braille curves, redrawn every epoch
-       └─ vibe-plot --heatmap / --report → confusion matrix + precision/recall, in the terminal
+> **Upstream:** the core capability is proposed to the Vibe CLI itself —
+> [mistralai/mistral-vibe#920](https://github.com/mistralai/mistral-vibe/pull/920)
+> (draft), built on `render_braille`, the primitive that animates Vibe's mascot.
+
+```mermaid
+flowchart LR
+    U["🧑‍💻 'train a model on my CSV,<br/>show me the training live'"] --> A[Vibe agent]
+    A -- ml-trainer skill --> S[training script<br/>streams metrics.jsonl]
+    S --> P["vibe-plot --follow<br/>live braille curves"]
+    A -- plot_metrics native tool --> W["colored charts<br/>in the Vibe TUI"]
+    S --> W
+    W --> R["confusion heatmap ·<br/>precision/recall · hist · bar"]
 ```
 
 ## Components
@@ -66,6 +72,10 @@ Built on the shoulders of the terminal-dataviz ecosystem — next integrations:
 - [textual-plot](https://github.com/davidfokkema/textual-plot): zoom/pan for
   interactive exploration.
 - plotext datetime axes, candlesticks, multi-panel dashboards.
+- Heavier training loops: PyTorch models on real datasets, with on-device
+  validation via Qualcomm AI Hub (compile + profile on Snapdragon).
+- Full terminal data-analysis workflows: dataset profiling, correlations,
+  drift monitoring — the terminal as a first-class data science surface.
 
 ## Use it from Mistral Vibe
 
