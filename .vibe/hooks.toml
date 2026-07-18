@@ -1,6 +1,15 @@
 # Project hooks for Mistral Vibe (loaded for sessions started in this repo).
 
 [[hooks]]
+name = "secrets-guard"
+type = "pre_tool"
+command = "python3 vibe_tools/secrets_guard.py"
+match = "read_file"
+timeout = 5.0
+strict = false
+description = "Refuse to read files that look like they contain credentials"
+
+[[hooks]]
 name = "telemetry"
 type = "post_tool"
 command = "python3 vibe_tools/telemetry_hook.py"

@@ -28,6 +28,7 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
+    ap.add_argument("--lr", type=float, default=0.001)
     ap.add_argument("--out-dir", default="runs/digits")
     ap.add_argument("--delay", type=float, default=0.15,
                     help="pause between epochs so the live plot is watchable")
@@ -45,7 +46,7 @@ def main():
     X_train, X_test = scaler.transform(X_train), scaler.transform(X_test)
 
     clf = MLPClassifier(hidden_layer_sizes=(64,), max_iter=1, warm_start=True,
-                        random_state=42)
+                        learning_rate_init=args.lr, random_state=42)
 
     with metrics_path.open("a") as f:
         for epoch in range(1, args.epochs + 1):
