@@ -108,6 +108,9 @@ Built on the shoulders of the terminal-dataviz ecosystem — next integrations:
 - **Canvas-to-CLI**: render Mistral Work Canvas artifacts in the terminal —
   tables ship today (`--table`); charts, documents and mini-apps next, so
   every Canvas has a terminal twin.
+- `pre_tool` hooks: on-the-fly conversion — intercept a matplotlib/plotting
+  call before it runs and render it as a terminal chart instead; plus
+  guard-rails (e.g. deny reads of secrets files).
 - Full terminal data-analysis workflows: dataset profiling, correlations,
   drift monitoring — the terminal as a first-class data science surface.
 
