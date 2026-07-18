@@ -38,6 +38,10 @@ flowchart LR
   render the final report.
 - **`examples/train_digits.py`** — reference training script (sklearn digits,
   trains in seconds) that emits the metrics stream and final artifacts.
+- **`examples/train_weather.py`** — the same workflow on real data: trains a
+  PyTorch forecaster on 3.5 years of Paris temperatures (Open-Meteo) and
+  predicts tomorrow's max — live curves, predicted-vs-actual overlay, and a
+  topical answer during the July 2026 heatwave.
 
 ## Quickstart
 

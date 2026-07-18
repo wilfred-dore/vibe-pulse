@@ -17,33 +17,41 @@ then:
 **Say:** "Vibe Work has charts in Canvas. The CLI had nothing — until now.
 Any CSV, any JSONL, straight in the conversation."
 
-## Scene 2 — Live ML training (90 s, the wow moment)
+## Scene 2 — Train a forecaster on that data, live (90 s, the wow moment)
 
 Right terminal (start it first, it waits for data):
 
-    uv run vibe-plot runs/demo/metrics.jsonl --follow --idle-timeout 8 --title "MLP on digits - live"
+    uv run vibe-plot runs/weather/metrics.jsonl --follow --idle-timeout 8 --title "Paris tmax forecaster - live"
 
 In Vibe (left):
-> train a model on the digits dataset with the ml-trainer skill, out-dir runs/demo, 40 epochs with a small delay between epochs
+> train a temperature forecaster on the Paris history (examples/train_weather.py) and stream the training
 
-The curves draw themselves epoch by epoch on the right while Vibe works on
-the left.
+Loss + MAE curves draw themselves epoch by epoch on the right while Vibe
+works on the left. When it finishes:
 
-**Say:** "Data scientists leave the terminal for Jupyter or TensorBoard just
-to see if a run converges. Not anymore: the agent trains, the terminal plots,
-live."
+> so, what's tomorrow's max temperature in Paris?
+
+(Vibe reads `runs/weather/forecast.json` → e.g. "28.7 °C — the heatwave
+breaks tomorrow")
+
+**Say:** "Same data, one prompt later: the agent trains a forecaster, the
+terminal plots it live, and we get tomorrow's temperature. Jupyter and
+TensorBoard never left their browser."
 
 ## Scene 3 — Results & MLOps in the conversation (45 s)
 
 In Vibe:
-> show the confusion matrix and the per-class report
+> plot predicted vs actual for the weather run
 
-(colored heatmap + precision/recall bars appear in the TUI)
+(braille overlay of the two curves on the 60-day test window)
 
-> compare the sklearn and torch runs on loss: runs/digits/metrics.jsonl vs runs/digits_torch/metrics.jsonl
+> now show the digits confusion matrix, and compare the sklearn vs torch runs on loss
 
-**Say:** "Run tracking, run comparison, agent-driven sweeps — W&B needs a
-server and a browser; we do it in the terminal, driven by the agent."
+(colored heatmap in the TUI + run comparison)
+
+**Say:** "3 °C mean error with a tiny MLP — Météo-France can sleep. The
+point is the workflow: tracking, comparison, agent-driven sweeps. W&B needs
+a server and a browser; we do it in the terminal, driven by the agent."
 
 ## Scene 4 — On-device + upstream (30 s)
 
