@@ -72,6 +72,9 @@ uv run vibe-plot data/paris_temps.csv --hist tmax --title "distribution of daily
   profiles the trained model on a real Snapdragon via Qualcomm AI Hub
   (`uv sync --extra aihub`). Measured on a real device during the hackathon:
   **0.052 ms inference, 24 MB peak memory on a Samsung Galaxy S24+**.
+- **Vibe on Qualcomm silicon** — a `[[providers]]` block points the CLI at
+  Llama-3.1-8B served on Qualcomm Cloud AI 100 (Cirrascale AI Suite):
+  `VIBE_ACTIVE_MODEL=qualcomm vibe`.
 
 ## Roadmap
 

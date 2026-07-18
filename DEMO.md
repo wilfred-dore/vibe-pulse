@@ -53,6 +53,13 @@ Show `runs/digits_torch/aihub.json` and/or the AI Hub dashboard page.
 Samsung Galaxy S24+ through Qualcomm AI Hub: 0.052 milliseconds per
 inference, 24 MB peak memory. Real numbers, real silicon."
 
+Optional flex (10 s): run `VIBE_ACTIVE_MODEL=qualcomm vibe` (or pick
+"qualcomm" in the TUI model picker) — the CLI itself now talks to
+Llama-3.1-8B served on Qualcomm Cloud AI 100.
+
+**Say:** "Full Qualcomm loop: our model profiled on a Snapdragon phone, and
+Vibe itself can run its inference on Qualcomm cloud silicon."
+
 Show the draft PR: https://github.com/mistralai/mistral-vibe/pull/920
 
 **Say:** "Everything works today through Vibe's official extension surfaces —
