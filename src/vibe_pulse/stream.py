@@ -56,7 +56,10 @@ def follow_rows(source, idle_timeout=None, poll=0.2):
     while True:
         batch = []
         if path.exists():
-            data = path.read_bytes()[pos:]
+            raw = path.read_bytes()
+            if len(raw) < pos:  # file truncated (new run started): restart
+                pos = 0
+            data = raw[pos:]
             if data:
                 cut = data.rfind(b"\n") + 1
                 for raw in data[:cut].splitlines():
