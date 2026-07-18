@@ -40,13 +40,15 @@ class PlotMetricsArgs(BaseModel):
             "report: JSON {'classes': [...], 'precision': [...], 'recall': [...]}."
         )
     )
-    kind: Literal["line", "scatter", "hist", "bar", "heatmap", "report", "compare"] = Field(
+    kind: Literal["line", "scatter", "hist", "bar", "heatmap", "report", "compare",
+                  "diagram"] = Field(
         default="line",
         description=(
             "Chart type: 'line' curves, 'scatter' points, 'hist' distribution "
             "of one column, 'bar' categories (x=labels, y=values), "
             "'heatmap' matrix, 'report' precision/recall bars, 'compare' one "
-            "metric overlaid across several runs (source = comma-separated files)"
+            "metric overlaid across several runs (source = comma-separated files), "
+            "'diagram' a PlantUML source file rendered as an ASCII diagram"
         ),
     )
     x: str | None = Field(default=None, description="x-axis key (line only; default: first numeric key)")
@@ -136,6 +138,8 @@ class PlotMetrics(
             if not column:
                 raise ToolError("kind='hist' needs the column name in 'y'")
             cmd += ["--hist", column, "--width", str(args.width)]
+        elif args.kind == "diagram":
+            cmd.append("--diagram")
         elif args.kind != "compare":
             cmd += ["--width", str(args.width), "--height", str(args.height)]
             if args.kind == "scatter":

@@ -1,0 +1,14 @@
+@startuml
+skinparam monochrome true
+actor User
+participant "Vibe agent" as Vibe
+participant "ml-trainer skill" as Skill
+participant "training script" as Train
+participant "vibe-plot" as Plot
+User -> Vibe: "train a model,\nshow me the curve"
+Vibe -> Skill: load workflow
+Skill -> Train: generate + run
+Train -> Train: stream metrics.jsonl
+Vibe -> Plot: plot_metrics (native tool)
+Plot --> User: braille charts,\nlive in the terminal
+@enduml

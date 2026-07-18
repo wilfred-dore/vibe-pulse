@@ -20,6 +20,10 @@ Five kinds:
   runs — pass 2+ comma-separated JSONL paths in `source`, e.g.
   `source="runs/a/metrics.jsonl,runs/b/metrics.jsonl"`. Use it to compare
   experiments (W&B-style run comparison, in the terminal).
+- `diagram`: render a PlantUML source file (.puml) as an ASCII diagram —
+  sequence, class, component, state diagrams. Write the .puml file first,
+  then call this. Great for explaining architectures without leaving the
+  terminal.
 
 The rendered chart is displayed to the user automatically. When summarizing,
 do not repeat the full chart; comment on what it shows (trend, convergence,

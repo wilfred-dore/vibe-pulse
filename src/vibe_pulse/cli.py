@@ -41,12 +41,20 @@ def main(argv=None):
                     help="bar chart: --x = category column, --y = value column")
     ap.add_argument("--compare", action="store_true",
                     help="overlay one metric (--y, default 'loss') across several runs")
+    ap.add_argument("--diagram", action="store_true",
+                    help="render a PlantUML source file as an ASCII diagram")
     ap.add_argument("--title")
     ap.add_argument("--width", type=int, default=70)
     ap.add_argument("--height", type=int, default=15)
     args = ap.parse_args(argv)
     sources = args.source
     args.source = sources[0]  # single-file modes use the first path
+
+    if args.diagram:
+        from . import diagram
+        text = sys.stdin.read() if args.source == "-" else Path(args.source).read_text()
+        print(diagram.render(text))
+        return 0
 
     if args.compare:
         key = args.y_keys.split(",")[0] if args.y_keys else "loss"
