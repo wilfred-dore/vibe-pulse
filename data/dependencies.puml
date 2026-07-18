@@ -1,0 +1,16 @@
+@startuml
+skinparam monochrome true
+title vibe-pulse - module dependencies (no cycles)
+component "cli" as cli
+component "plotter" as plotter
+component "stream" as stream
+component "diagram" as diagram
+component "plot_metrics\n(native Vibe tool)" as tool
+component "ml-trainer\n(skill)" as skill
+cli --> plotter
+cli --> stream
+cli --> diagram
+tool --> cli : subprocess
+skill --> tool
+skill --> cli
+@enduml
